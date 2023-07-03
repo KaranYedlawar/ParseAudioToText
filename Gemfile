@@ -73,3 +73,5 @@ end
 
 gem 'httparty'
 gem 'dotenv-rails'
+gem "rspec-rails"
+gem "simplecov"

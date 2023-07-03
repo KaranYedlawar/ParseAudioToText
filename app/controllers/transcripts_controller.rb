@@ -1,6 +1,6 @@
 require 'httparty'
 class TranscriptsController < ApplicationController
-  
+
   def translate
     audio_file = params[:audio_file]
 
@@ -9,13 +9,9 @@ class TranscriptsController < ApplicationController
     flagged_words = check_flagged_words(analyzed_text)
 
     if flagged_words.empty?
-      render json: 
-    { message: 'parsed successfully.'
-    }, Status: 200
+      render json: { message: 'Parsed audio successfully.' }, status: :ok
     else
-      render json: 
-    { message: 'Audio contains flagged words. User blocked.' 
-    }, Status: 400
+      render json: { message: 'Audio contains flagged words. User blocked.' }, status: :bad_request
     end
   end
 
@@ -39,7 +35,7 @@ class TranscriptsController < ApplicationController
   def convert_audio_to_text(audio_file)
     headers = {
       'authorization' => ENV['ASSEMBLYAI_API_TOKEN'],
-      'content-type' => 'audio/mpeg'
+      'content-type' => 'audio/mpeg/mo3'
     }
   
     response = HTTParty.post(ENV['ASSEMBLYAI_SPEECH_TO_TEXT_URL'], body: audio_file, headers: headers)
